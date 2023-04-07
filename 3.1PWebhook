@@ -1,0 +1,17 @@
+int lightPin = A0; 
+int ledPin = D13; 
+void setup() {
+  pinMode(ledPin, OUTPUT);
+  Particle.variable("light", 0);
+}
+void loop() {
+  int lightLevel = analogRead(lightPin);
+  Particle.variable("light", lightLevel); 
+  Particle.publish("light", String::format("%d", lightLevel), PRIVATE);
+  if (lightLevel > 500) { 
+    digitalWrite(ledPin, HIGH);
+  } else { 
+    digitalWrite(ledPin, LOW);
+  }
+  delay(3000); 
+}
